@@ -1,0 +1,1 @@
+home-manager switch --flake .\#sine --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store

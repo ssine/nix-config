@@ -9,6 +9,8 @@
     # network
     wget
     openssh
+    unixtools.netstat
+    telnet
 
     # monitor
     htop

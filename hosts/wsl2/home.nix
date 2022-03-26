@@ -52,6 +52,10 @@
     # if any font warning occurs: `sudo apt install fontconfig`
     plantuml
     graphviz
+
+    minikube
+    kubernetes-helm
+    mongodb
   ]);
 
   home.sessionVariables = {

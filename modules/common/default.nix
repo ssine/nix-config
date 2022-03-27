@@ -24,6 +24,7 @@
     # common languages
     # go_1_16
     go_1_15
+    gnumake
     nodejs-16_x
     nodePackages.typescript
     (python38.withPackages (p: with p; [

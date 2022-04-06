@@ -21,18 +21,32 @@
     # shell
     tmux
 
-    # common languages
-    # go_1_16
+    # common languages & dev tools
+
+    # golang, see https://mgdm.net/weblog/vscode-nix-go-tools/
     go_1_15
+    gotools
+    gopls
+    go-outline
+    gocode
+    gopkgs
+    gocode-gomod
+    godef
+    golint
+
     gnumake
+
     nodejs-16_x
     nodePackages.typescript
-    (python38.withPackages (p: with p; [
+
+    (python3.withPackages (p: with p; [
       requests
       pandas
     ]))
     poetry
+
     nixpkgs-fmt
+
     jdk17
   ];
 }

@@ -39,11 +39,26 @@
         fi
       }
       alias proxy=toggle_proxy
+
+      # >>> conda initialize >>>
+      # !! Contents within this block are managed by 'conda init' !!
+      __conda_setup="$('/home/sine/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+      if [ $? -eq 0 ]; then
+          eval "$__conda_setup"
+      else
+          if [ -f "/home/sine/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+              . "/home/sine/opt/miniconda3/etc/profile.d/conda.sh"
+          else
+              export PATH="/home/sine/opt/miniconda3/bin:$PATH"
+          fi
+      fi
+      unset __conda_setup
+      # <<< conda initialize <<<
     '';
   };
 
   imports = [
-    # ../../modules/home-manager/zsh
+    ../../modules/home-manager/conda
   ];
 
   home.packages = (import ../../modules/common).devtools pkgs ++ (with pkgs; [

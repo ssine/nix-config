@@ -34,6 +34,7 @@
     godef
     golint
 
+    gcc
     gnumake
 
     nodejs-16_x
@@ -42,6 +43,8 @@
     (python3.withPackages (p: with p; [
       requests
       pandas
+      yapf
+      ipykernel
     ]))
     poetry
 

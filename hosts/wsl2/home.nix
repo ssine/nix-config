@@ -71,6 +71,9 @@
     minikube
     kubernetes-helm
     mongodb
+
+    nodePackages.madoko
+    texlive.combined.scheme-full
   ]);
 
   home.sessionVariables = {

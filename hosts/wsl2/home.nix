@@ -74,6 +74,8 @@
 
     nodePackages.madoko
     texlive.combined.scheme-full
+
+    hugo
   ]);
 
   home.sessionVariables = {

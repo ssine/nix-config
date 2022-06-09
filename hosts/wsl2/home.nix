@@ -1,3 +1,4 @@
+inputs:
 { config, pkgs, ... }:
 
 {
@@ -20,8 +21,6 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
-    nix-direnv.enableFlakes = true;
   };
 
   programs.zsh = (import ../../modules/home-manager/zsh) {
@@ -63,7 +62,7 @@
 
   home.packages = (import ../../modules/common).devtools pkgs ++ (with pkgs; [
     kubectl
-    ncat
+    nmap
     # if any font warning occurs: `sudo apt install fontconfig`
     plantuml
     graphviz
@@ -76,6 +75,8 @@
     texlive.combined.scheme-full
 
     hugo
+
+    inputs.rnix-lsp.defaultPackage."x86_64-linux"
   ]);
 
   home.sessionVariables = {

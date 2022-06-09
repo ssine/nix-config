@@ -2,32 +2,28 @@
   description = "An example NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-cn = {
       url = "github:nixos-cn/flakes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rnix-lsp = {
+      url = "github:nix-community/rnix-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-cn }: {
+  outputs = { self, ... }@inputs: {
     nixosConfigurations = {
-      code01 = import ./hosts/code01 { inherit nixpkgs home-manager nixos-cn; };
+      code01 = import ./hosts/code01 inputs;
     };
-    homeConfigurations.sine = home-manager.lib.homeManagerConfiguration {
-      system = "x86_64-linux";
-      homeDirectory = "/home/sine";
-      username = "sine";
-      configuration = import ./hosts/wsl2/home.nix;
-    };
-    homeConfigurations."liusiyao.sine" = home-manager.lib.homeManagerConfiguration {
-      system = "x86_64-linux";
-      homeDirectory = "/home/liusiyao.sine";
-      username = "liusiyao.sine";
-      configuration = import ./hosts/bytedance-devbox/home.nix;
+    homeConfigurations = {
+      devbox = import ./hosts/bytedance-devbox inputs;
+      wsl = import ./hosts/wsl2 inputs;
     };
   };
 

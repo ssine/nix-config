@@ -10,7 +10,7 @@
     wget
     openssh
     unixtools.netstat
-    telnet
+    inetutils
 
     # monitor
     htop
@@ -24,7 +24,7 @@
     # common languages & dev tools
 
     # golang, see https://mgdm.net/weblog/vscode-nix-go-tools/
-    go_1_15
+    go
     gotools
     gopls
     go-outline

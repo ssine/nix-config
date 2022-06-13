@@ -38,6 +38,7 @@
     gnumake
 
     nodejs-16_x
+    yarn
     nodePackages.typescript
 
     (python3.withPackages (p: with p; [

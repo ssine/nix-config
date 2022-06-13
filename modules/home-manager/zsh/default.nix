@@ -10,10 +10,7 @@
     plugins = [ "git" ];
   };
   localVariables = { };
-  initExtra = ''
-    # initialize direnv hooks
-    eval "$(direnv hook zsh)"
-  '' + rcAppend;
+  initExtra = rcAppend;
   plugins = [
     {
       name = "powerlevel10k";

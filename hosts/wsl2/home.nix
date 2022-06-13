@@ -3,6 +3,9 @@ inputs:
 
 {
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    inputs.android-nixpkgs.overlay
+  ];
   programs.home-manager.enable = true;
   home.enableNixpkgsReleaseCheck = true;
 
@@ -64,7 +67,19 @@ inputs:
 
   imports = [
     ../../modules/home-manager/conda
+    inputs.android-nixpkgs.hmModule
   ];
+
+  # android-sdk = {
+  #   enable = true;
+  #   packages = sdk: with sdk; [
+  #     build-tools-32-0-0
+  #     cmdline-tools-latest
+  #     emulator
+  #     platforms-android-32
+  #     sources-android-32
+  #   ];
+  # };
 
   home.packages = (import ../../modules/common).devtools pkgs ++ (with pkgs; [
     kubectl

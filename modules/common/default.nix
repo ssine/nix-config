@@ -22,6 +22,7 @@
     tmux
 
     # common languages & dev tools
+    cloc
 
     # golang, see https://mgdm.net/weblog/vscode-nix-go-tools/
     go

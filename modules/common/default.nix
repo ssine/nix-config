@@ -23,6 +23,7 @@
 
     # common languages & dev tools
     cloc
+    ffmpeg
 
     # golang, see https://mgdm.net/weblog/vscode-nix-go-tools/
     go

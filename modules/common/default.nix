@@ -24,6 +24,7 @@
     # common languages & dev tools
     cloc
     ffmpeg
+    python310Packages.gprof2dot
 
     # golang, see https://mgdm.net/weblog/vscode-nix-go-tools/
     go

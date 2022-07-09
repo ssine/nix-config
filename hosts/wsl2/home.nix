@@ -6,10 +6,6 @@ inputs:
   nixpkgs.overlays = [
     inputs.android-nixpkgs.overlay
   ];
-  nixpkgs.config.permittedInsecurePackages = [
-    "python2.7-urllib3-1.26.2"
-    "python2.7-pyjwt-1.7.1"
-  ];
   programs.home-manager.enable = true;
   home.enableNixpkgsReleaseCheck = true;
 
@@ -103,7 +99,7 @@ inputs:
 
     inputs.rnix-lsp.defaultPackage."x86_64-linux"
 
-    nixops
+    nixops_unstable
   ]);
 
   home.sessionVariables = {

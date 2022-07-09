@@ -29,6 +29,14 @@
       devbox = import ./hosts/bytedance-devbox inputs;
       wsl = import ./hosts/wsl2 inputs;
     };
+    nixopsConfigurations.default = {
+      nixpkgs = inputs.nixpkgs;
+      network = {
+        description = "personal environment";
+        storage.memory = { };
+      };
+      homeserver = import ./hosts/server/configuration.nix inputs;
+    };
   };
 
   nixConfig.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" "https://cache.nixos.org/" ];

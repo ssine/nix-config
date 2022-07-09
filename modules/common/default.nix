@@ -56,4 +56,35 @@
 
     jdk17
   ];
+
+  servertools = pkgs: with pkgs; [
+    # file manipulation
+    vim
+    zip
+    unzip
+    less
+
+    # network
+    wget
+    openssh
+    unixtools.netstat
+    inetutils
+
+    # monitor
+    htop
+    iotop
+    atop
+    neofetch
+
+    # shell
+    tmux
+
+    # common languages & dev tools
+    git
+    cloc
+
+    nodejs-16_x
+    yarn
+    nodePackages.typescript
+  ];
 }

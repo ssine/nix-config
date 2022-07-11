@@ -1,2 +1,2 @@
 hosts/server/service
-hosts/server/containers.nix
+hosts/server/configs.nix

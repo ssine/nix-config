@@ -21,6 +21,7 @@ in
 
   virtualisation = {
     docker.enable = true;
+    docker.liveRestore = false;
     oci-containers = import ./containers.nix;
   };
 
@@ -36,6 +37,57 @@ in
     path = [
       pkgs.git
     ];
+  };
+
+  systemd.services.caddy = {
+    enable = true;
+    description = "caddy";
+    serviceConfig = {
+      ExecStart = "${pkgs.caddy}/bin/caddy run --environ --adapter caddyfile --config " + pkgs.writeText "Caddyfile" configs.caddy.caddy-file;
+      User = "sine";
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_14;
+    port = configs.postgres.port;
+    enableTCPIP = true;
+    authentication = ''
+      host all all all password
+    '';
+    ensureDatabases = [ "nextcloud" "main" configs.bitwarden.dbname ];
+    ensureUsers = [
+      {
+        name = "sine";
+        ensurePermissions = {
+          "DATABASE main" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = configs.bitwarden.dbuser;
+        ensurePermissions = {
+          "DATABASE ${configs.bitwarden.dbname}" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = "nextcloud";
+        ensurePermissions = {
+          "DATABASE nextcloud" = "ALL PRIVILEGES";
+        };
+      }
+    ];
+    initialScript = pkgs.writeText "pg-init.sql" ''
+      CREATE ROLE "${configs.postgres.user}" WITH LOGIN PASSWORD '${configs.postgres.password}';
+      CREATE ROLE "${configs.bitwarden.dbuser}" WITH LOGIN PASSWORD '${configs.bitwarden.dbpass}';
+      CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
+      CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
+        TEMPLATE template0
+        LC_COLLATE = "C"
+        LC_CTYPE = "C";
+    '';
   };
 
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];

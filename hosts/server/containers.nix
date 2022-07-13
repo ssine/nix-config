@@ -4,22 +4,11 @@ in
 {
   backend = "docker";
   containers = {
-    postgres = {
-      autoStart = true;
-      image = "postgres:14";
-      ports = [ "${config.postgres.port}:5432" ];
-      volumes = [ "${config.postgres.folder}:/var/lib/postgresql/data" ];
-      environment = {
-        POSTGRES_DB = "main";
-        POSTGRES_USER = config.postgres.user;
-        POSTGRES_PASSWORD = config.postgres.password;
-      };
-    };
-
     dbadminer = {
       autoStart = true;
       image = "adminer";
       ports = [ "${config.dbadminer.port}:8080" ];
+      extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
     };
 
     jupyter = {
@@ -44,7 +33,7 @@ in
         DOMAIN = config.bitwarden.domain;
         DATABASE_URL = config.bitwarden.db;
       };
-      dependsOn = [ "postgres" ];
+      extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
     };
   };
 }

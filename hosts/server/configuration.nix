@@ -86,6 +86,22 @@ in
     '';
   };
 
+
+  systemd.services.sync-wiki = {
+    enable = true;
+    description = "sync-wiki";
+    startAt = "minutely";
+    serviceConfig = {
+      WorkingDirectory = configs.kiwi.folder;
+      ExecStart = ''${pkgs.bash}/bin/bash -c "git add . && git commit -m 'daily update' && git push"'';
+      User = "sine";
+    };
+    wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.git
+    ];
+  };
+
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   nix.extraOptions = ''
     experimental-features = nix-command flakes
@@ -157,7 +173,6 @@ in
           pull.rebase = false;
         };
       };
-      home.file."secret-folder/neon".source = inputs.neon.legacyPackages.x86_64-linux.neon;
       home.packages = [ ];
     };
   };

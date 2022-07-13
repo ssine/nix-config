@@ -77,5 +77,13 @@ in
       };
       extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
     };
+
+    kiwi = {
+      autoStart = true;
+      image = "sineliu/kiwi:latest";
+      ports = [ "${config.kiwi.port}:8080" ];
+      volumes = [ "${config.kiwi.folder}:/data" ];
+      user = "1000:100";
+    };
   };
 }

@@ -90,7 +90,7 @@ in
   systemd.services.sync-wiki = {
     enable = true;
     description = "sync-wiki";
-    startAt = "minutely";
+    startAt = "daily";
     serviceConfig = {
       WorkingDirectory = configs.kiwi.folder;
       ExecStart = ''${pkgs.bash}/bin/bash -c "git add . && git commit -m 'daily update' && git push"'';

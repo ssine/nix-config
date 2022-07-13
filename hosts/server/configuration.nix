@@ -58,24 +58,20 @@ in
     authentication = ''
       host all all all password
     '';
-    ensureDatabases = [ "nextcloud" "main" configs.bitwarden.dbname ];
+    ensureDatabases = [ "main" configs.bitwarden.dbname configs.nocodb.dbname configs.metabase.dbname ];
     ensureUsers = [
       {
         name = "sine";
         ensurePermissions = {
           "DATABASE main" = "ALL PRIVILEGES";
+          "DATABASE ${configs.nocodb.dbname}" = "ALL PRIVILEGES";
+          "DATABASE ${configs.metabase.dbname}" = "ALL PRIVILEGES";
         };
       }
       {
         name = configs.bitwarden.dbuser;
         ensurePermissions = {
           "DATABASE ${configs.bitwarden.dbname}" = "ALL PRIVILEGES";
-        };
-      }
-      {
-        name = "nextcloud";
-        ensurePermissions = {
-          "DATABASE nextcloud" = "ALL PRIVILEGES";
         };
       }
     ];

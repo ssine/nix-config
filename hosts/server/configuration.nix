@@ -22,11 +22,11 @@ in
   virtualisation = {
     docker.enable = true;
     docker.liveRestore = false;
-    oci-containers = import ./containers.nix;
+    oci-containers = if configs.maintenance then { } else import ./containers.nix;
   };
 
   systemd.services.fava = {
-    enable = true;
+    enable = !configs.maintenance;
     description = "fava";
     serviceConfig = {
       WorkingDirectory = inputs.neon.legacyPackages.x86_64-linux.neon;
@@ -40,7 +40,7 @@ in
   };
 
   systemd.services.caddy = {
-    enable = true;
+    enable = !configs.maintenance;
     description = "caddy";
     serviceConfig = {
       ExecStart = "${pkgs.caddy}/bin/caddy run --environ --adapter caddyfile --config " + pkgs.writeText "Caddyfile" configs.caddy.caddy-file;
@@ -88,7 +88,7 @@ in
 
 
   systemd.services.sync-wiki = {
-    enable = true;
+    enable = !configs.maintenance;
     description = "sync-wiki";
     startAt = "daily";
     serviceConfig = {
@@ -104,7 +104,7 @@ in
   };
 
   services.matrix-synapse = {
-    enable = true;
+    enable = !configs.maintenance;
     dataDir = configs.synapse.folder;
     settings = {
       server_name = configs.synapse.domain;

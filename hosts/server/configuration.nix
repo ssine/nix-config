@@ -43,7 +43,11 @@ in
     enable = !configs.maintenance;
     description = "caddy";
     serviceConfig = {
-      ExecStart = "${pkgs.caddy}/bin/caddy run --environ --adapter caddyfile --config " + pkgs.writeText "Caddyfile" configs.caddy.caddy-file;
+      ExecStart = ''${pkgs.caddy}/bin/caddy run \
+        --environ \
+        --adapter caddyfile \
+        --config ${pkgs.writeText "Caddyfile" configs.caddy.caddy-file}
+      '';
       User = "sine";
       AmbientCapabilities = "CAP_NET_BIND_SERVICE";
     };
@@ -65,7 +69,10 @@ in
         ensurePermissions = {
           "DATABASE main" = "ALL PRIVILEGES";
           "DATABASE ${configs.nocodb.dbname}" = "ALL PRIVILEGES";
+          "DATABASE ${configs.bitwarden.dbname}" = "ALL PRIVILEGES";
           "DATABASE ${configs.metabase.dbname}" = "ALL PRIVILEGES";
+          "DATABASE \"matrix-synapse\"" = "ALL PRIVILEGES";
+          "DATABASE ${configs.nextcloud.dbname}" = "ALL PRIVILEGES";
         };
       }
       {
@@ -78,6 +85,10 @@ in
     initialScript = pkgs.writeText "pg-init.sql" ''
       CREATE ROLE "${configs.postgres.user}" WITH LOGIN PASSWORD '${configs.postgres.password}';
       CREATE ROLE "${configs.bitwarden.dbuser}" WITH LOGIN PASSWORD '${configs.bitwarden.dbpass}';
+      CREATE DATABASE "main" WITH OWNER "${configs.postgres.user}";
+      CREATE DATABASE "${configs.nextcloud.dbname}" WITH OWNER "${configs.postgres.user}";
+      CREATE DATABASE "${configs.nocodb.dbname}" WITH OWNER "${configs.postgres.user}";
+      CREATE DATABASE "${configs.metabase.dbname}" WITH OWNER "${configs.postgres.user}";
       CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
       CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
         TEMPLATE template0
@@ -99,6 +110,7 @@ in
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.git
+      pkgs.git-lfs
       pkgs.openssh
     ];
   };

@@ -46,6 +46,7 @@ in
         PGID = "100";
         TZ = "Asia/Shanghai";
       };
+      extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
     };
 
     nocodb = {

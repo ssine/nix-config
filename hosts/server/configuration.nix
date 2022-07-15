@@ -143,6 +143,25 @@ in
     '';
   };
 
+  services.postgresqlBackup = {
+    enable = !configs.maintenance;
+    location = configs.postgres.backup-folder;
+    startAt = "*-*-* 05:00:00";
+    databases = configs.postgres.backup-dbs;
+    pgdumpOptions = "-p ${toString configs.postgres.port}";
+  };
+
+  systemd.services.upload-postgres = {
+    enable = !configs.maintenance;
+    description = "upload-postgres";
+    startAt = "*-*-* 05:30:00";
+    serviceConfig = {
+      WorkingDirectory = configs.postgres.backup-folder;
+      ExecStart = "${pkgs.bash}/bin/bash -c \"" + (builtins.concatStringsSep " && " (map (db: "${pkgs.ossutil}/bin/ossutil cp -f ${db}.sql.gz oss://sine-oss/postgresql-backup/") configs.postgres.backup-dbs)) + "\"";
+      User = "root";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   systemd.services.sync-wiki = {
     enable = !configs.maintenance;

@@ -167,11 +167,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1657395600,
-        "narHash": "sha256-oqlQgxXQjLfKTV1yDuuhvcAEUKWGKM9Q5IIxqXxHUZA=",
+        "lastModified": 1657906376,
+        "narHash": "sha256-16gCT/8zhfG6gaJsCs2VnheNVrTXFFOTECIWRRCVsWY=",
         "ref": "master",
-        "rev": "4c271a5c6d08e48cea028ad3e8f384fb20b1c823",
-        "revCount": 68,
+        "rev": "9520af3e01fb6748f492d7d89aef6316c78d5c17",
+        "revCount": 71,
         "type": "git",
         "url": "file:///home/sine/code/ssine/neon"
       },

@@ -29,8 +29,54 @@ in
     enable = !configs.maintenance;
     description = "fava";
     serviceConfig = {
-      WorkingDirectory = inputs.neon.legacyPackages.x86_64-linux.neon;
+      # WorkingDirectory = inputs.neon.legacyPackages.x86_64-linux.neon;
+      WorkingDirectory = configs.neon-folder;
       ExecStart = "${pkgs.nix}/bin/nix develop -c make start-fava";
+      User = "sine";
+    };
+    wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.git
+      pkgs.git-lfs
+    ];
+  };
+
+  systemd.services.unibot = {
+    enable = !configs.maintenance;
+    description = "unibot";
+    serviceConfig = {
+      WorkingDirectory = configs.neon-folder;
+      ExecStart = "${pkgs.nix}/bin/nix develop -c make start-unibot";
+      User = "sine";
+    };
+    wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.git
+      pkgs.git-lfs
+    ];
+  };
+
+  systemd.services.moment = {
+    enable = !configs.maintenance;
+    description = "moment";
+    serviceConfig = {
+      WorkingDirectory = configs.neon-folder;
+      ExecStart = "${pkgs.nix}/bin/nix develop -c make start-moment-dump";
+      User = "sine";
+    };
+    wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.git
+      pkgs.git-lfs
+    ];
+  };
+
+  systemd.services.life-metric = {
+    enable = !configs.maintenance;
+    description = "life-metric";
+    serviceConfig = {
+      WorkingDirectory = configs.neon-folder;
+      ExecStart = "${pkgs.nix}/bin/nix develop -c make start-metric";
       User = "sine";
     };
     wantedBy = [ "multi-user.target" ];

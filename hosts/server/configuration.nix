@@ -93,14 +93,48 @@ in
     startAt = "daily";
     serviceConfig = {
       WorkingDirectory = configs.kiwi.folder;
-      ExecStart = ''${pkgs.bash}/bin/bash -c "git add . && git commit -m 'daily update' && git push"'';
+      ExecStart = ''${pkgs.bash}/bin/bash -c "git add . && (git commit -m 'daily update' || true) && git push"'';
       User = "sine";
     };
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.git
+      pkgs.openssh
     ];
   };
+
+  services.matrix-synapse = {
+    enable = true;
+    dataDir = configs.synapse.folder;
+    settings = {
+      server_name = configs.synapse.domain;
+      enable_registration = true;
+      enable_registration_without_verification = true;
+      suppress_key_server_warning = true;
+      registration_shared_secret = configs.synapse.registration-shared-secret;
+      signing_key_path = pkgs.writeText "synapse.signing.key" configs.synapse.signing-key;
+      log_config = pkgs.writeText "synapse.log.config" configs.synapse.log-config;
+      listeners = [{
+        port = configs.synapse.port;
+        tls = false;
+        type = "http";
+        x_forwarded = true;
+        resources = [{
+          names = [ "client" "federation" ];
+          compress = true;
+        }];
+      }];
+      database = {
+        name = "psycopg2";
+        args = {
+          port = configs.postgres.port;
+          database = "matrix-synapse";
+          user = "matrix-synapse";
+        };
+      };
+    };
+  };
+  systemd.services.matrix-synapse.serviceConfig.ExecStartPre = [ "" ]; # fix chmod on /nix/store error
 
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   nix.extraOptions = ''

@@ -39,7 +39,8 @@ in
     nextcloud = {
       autoStart = true;
       image = "lscr.io/linuxserver/nextcloud:24.0.2";
-      ports = [ "${config.nextcloud.port}:80" ];
+      # forcing ipv4 as ipv6 breaks nextcloud, see https://github.com/nextcloud/android/issues/7400.
+      ports = [ "0.0.0.0:${config.nextcloud.port}:80" ];
       volumes = [ "${config.nextcloud.datafolder}:/data" "${config.nextcloud.configfolder}:/config" ];
       environment = {
         PUID = "1000";

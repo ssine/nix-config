@@ -91,6 +91,9 @@ inputs:
     minikube
     kubernetes-helm
     mongodb
+    # terraform
+    # awscli
+    # google-cloud-sdk
 
     nodePackages.madoko
     texlive.combined.scheme-full

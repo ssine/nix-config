@@ -107,5 +107,6 @@ inputs:
 
   home.sessionVariables = {
     NO_UPDATE_NOTIFIER = 1; # disable npm update notification
+    DIRENV_LOG_FORMAT = ""; # FIXME: disable direnv output, seems not working
   };
 }

@@ -49,6 +49,8 @@
       pandas
       yapf
       ipykernel
+      matplotlib
+      numpy
     ]))
     poetry
 

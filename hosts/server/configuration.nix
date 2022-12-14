@@ -299,6 +299,10 @@ in
   environment.systemPackages = (import ../../modules/common).servertools pkgs ++ (with pkgs; [
     ossutil
     postgresql_14
+
+    (python3.withPackages (p: with p; [
+      requests
+    ]))
   ]);
 
   # Some programs need SUID wrappers, can be configured further or are

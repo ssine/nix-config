@@ -103,6 +103,9 @@ inputs:
     inputs.rnix-lsp.defaultPackage."x86_64-linux"
 
     nixops_unstable
+
+    # used to forward usb devices from windows to wsl
+    # linuxKernel.packages.linux_5_15.usbip
   ]);
 
   home.sessionVariables = {

@@ -39,8 +39,9 @@
 
     gcc
     gnumake
+    postgresql
 
-    nodejs-16_x
+    nodejs-18_x
     yarn
     nodePackages.typescript
 
@@ -49,6 +50,8 @@
       pandas
       yapf
       ipykernel
+      jupyter
+      jupyterlab
       matplotlib
       numpy
     ]))

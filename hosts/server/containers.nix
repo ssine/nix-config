@@ -82,9 +82,9 @@ in
 
     kiwi = {
       autoStart = true;
-      image = "sineliu/kiwi:0.9.6";
+      image = "sineliu/kiwi:0.10.1";
       ports = [ "${config.kiwi.port}:8080" ];
-      volumes = [ "${config.kiwi.folder}:/data" ];
+      volumes = [ "${config.kiwi.folder}:/data" "${config.kiwi.log-folder}:/logs" ];
       user = "1000:100";
     };
   };

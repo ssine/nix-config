@@ -82,6 +82,7 @@ in
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.git
+      pkgs.git-lfs
     ];
   };
 
@@ -148,7 +149,7 @@ in
     location = configs.postgres.backup-folder;
     startAt = "*-*-* 05:00:00";
     databases = configs.postgres.backup-dbs;
-    pgdumpOptions = "-p ${toString configs.postgres.port}";
+    pgdumpOptions = "-p ${toString configs.postgres.port} --clean";
   };
 
   systemd.services.upload-postgres = {

@@ -52,12 +52,13 @@ in
 
     nocodb = {
       autoStart = true;
-      image = "nocodb/nocodb:0.92.0";
+      image = "nocodb/nocodb:0.100.2";
       ports = [ "${config.nocodb.port}:8080" ];
       volumes = [ "${config.nocodb.folder}:/data" ];
       environment = {
         NC_DB = config.nocodb.db;
         NC_AUTH_JWT_SECRET = config.nocodb.jwt;
+        NC_JWT_EXPIRES_IN = "10000h";
         DB_QUERY_LIMIT_MIN = "1";
         DB_QUERY_LIMIT_DEFAULT = "100";
         DB_QUERY_LIMIT_MAX = "100";

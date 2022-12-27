@@ -3,6 +3,10 @@ inputs:
 
 {
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.10-poetry-1.2.2"
+    "python3.10-certifi-2022.9.24"
+  ];
   nixpkgs.overlays = [
     inputs.android-nixpkgs.overlay
   ];
@@ -100,9 +104,16 @@ inputs:
 
     hugo
 
-    inputs.rnix-lsp.defaultPackage."x86_64-linux"
+    # inputs.rnix-lsp.defaultPackage."x86_64-linux"
 
     nixops_unstable
+
+    cargo
+    rustc
+    rustfmt
+    pkg-config
+    rust-analyzer
+    cargo-watch
 
     # used to forward usb devices from windows to wsl
     # linuxKernel.packages.linux_5_15.usbip

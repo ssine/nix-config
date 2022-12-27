@@ -13,8 +13,8 @@ in
 
     jupyter = {
       autoStart = true;
-      image = "sineliu/jupyterlab-all-in-one:code";
-      ports = [ "${config.jupyter.port}:8080" ];
+      image = "sineliu/jupyterlab-all-in-one:latest";
+      ports = [ "${config.jupyter.code-port}:8080" "${config.jupyter.lab-port}:8081" ];
       volumes = [ "${config.jupyter.folder}:/data" ];
       environment = {
         LABUID = "1000";

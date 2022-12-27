@@ -2,8 +2,15 @@
 let system = "x86_64-linux";
 in
 home-manager.lib.homeManagerConfiguration {
-  system = "x86_64-linux";
-  homeDirectory = "/home/sine";
-  username = "sine";
-  configuration = import ./home.nix inputs;
+  pkgs = inputs.nixpkgs.legacyPackages.${system};
+  modules = [
+    (import ./home.nix inputs)
+    {
+      home = {
+        username = "sine";
+        homeDirectory = "/home/sine";
+        stateVersion = "22.05";
+      };
+    }
+  ];
 }

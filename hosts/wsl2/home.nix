@@ -115,6 +115,9 @@ inputs:
     rust-analyzer
     cargo-watch
 
+    nixfmt
+    nil
+
     # used to forward usb devices from windows to wsl
     # linuxKernel.packages.linux_5_15.usbip
   ]);

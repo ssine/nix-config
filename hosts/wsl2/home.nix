@@ -95,9 +95,10 @@ inputs:
     minikube
     kubernetes-helm
     mongodb
-    # terraform
+    terraform
     # awscli
     # google-cloud-sdk
+    (google-cloud-sdk.withExtraComponents ([google-cloud-sdk.components.gke-gcloud-auth-plugin]))
 
     nodePackages.madoko
     texlive.combined.scheme-full

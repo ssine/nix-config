@@ -233,7 +233,7 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.enableIPv6 = false;
+  networking.enableIPv6 = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";

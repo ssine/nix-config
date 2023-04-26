@@ -3,6 +3,7 @@
   enable = true;
   shellAliases = {
     ll = "ls -la";
+    k = "kubectl";
     update = "sudo nixos-rebuild switch";
   };
   oh-my-zsh = {

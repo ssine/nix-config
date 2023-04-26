@@ -31,7 +31,7 @@ in
     serviceConfig = {
       # WorkingDirectory = inputs.neon.legacyPackages.x86_64-linux.neon;
       WorkingDirectory = configs.neon-folder;
-      ExecStart = "${pkgs.fava}/bin/fava data/bookkeepping/beans/base.bean -H 0.0.0.0 -p 2025";
+      ExecStart = "${inputs.nixpkgs-unstable.legacyPackages."x86_64-linux".fava}/bin/fava data/bookkeepping/beans/base.bean -H 0.0.0.0 -p 2025";
       User = "sine";
     };
     wantedBy = [ "multi-user.target" ];

@@ -3,7 +3,7 @@ let
 in
 {
   backend = "docker";
-  containers = {
+  containers = if config.maintenance then {} else {
     dbadminer = {
       autoStart = true;
       image = "adminer";

@@ -65,7 +65,7 @@ inputs:
       unset __conda_setup
       # <<< conda initialize <<<
 
-      export PATH="/home/sine/.nix-profile/bin:$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin/:/mnt/c/Program Files/Microsoft VS Code/bin"
+      export PATH="/home/sine/.npm-packages/bin:/home/sine/.nix-profile/bin:$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin/:/mnt/c/Program Files/Microsoft VS Code/bin"
     '';
   };
 

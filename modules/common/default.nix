@@ -45,16 +45,16 @@
     yarn
     nodePackages.typescript
 
-    (python3.withPackages (p: with p; [
-      requests
-      pandas
-      yapf
-      ipykernel
-      jupyter
-      jupyterlab
-      matplotlib
-      numpy
-    ]))
+    # (python3.withPackages (p: with p; [
+    #   requests
+    #   pandas
+    #   yapf
+    #   ipykernel
+    #   jupyter
+    #   jupyterlab
+    #   matplotlib
+    #   numpy
+    # ]))
     poetry
 
     nixpkgs-fmt

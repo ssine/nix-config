@@ -57,7 +57,8 @@ in
   };
 
   systemd.services.moment = {
-    enable = !configs.maintenance;
+    # enable = !configs.maintenance;
+    enable = false;
     description = "moment";
     serviceConfig = {
       WorkingDirectory = configs.neon-folder;
@@ -109,7 +110,7 @@ in
     authentication = ''
       host all all all password
     '';
-    ensureDatabases = [ "main" configs.bitwarden.dbname configs.nocodb.dbname configs.metabase.dbname ];
+    ensureDatabases = [ "main" configs.bitwarden.dbname configs.nocodb.dbname configs.metabase.dbname configs.freshrss.dbname configs.n8n.dbname ];
     ensureUsers = [
       {
         name = "sine";
@@ -128,10 +129,24 @@ in
           "DATABASE ${configs.bitwarden.dbname}" = "ALL PRIVILEGES";
         };
       }
+      {
+        name = configs.freshrss.dbuser;
+        ensurePermissions = {
+          "DATABASE ${configs.freshrss.dbname}" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = configs.n8n.dbuser;
+        ensurePermissions = {
+          "DATABASE ${configs.n8n.dbname}" = "ALL PRIVILEGES";
+        };
+      }
     ];
     initialScript = pkgs.writeText "pg-init.sql" ''
       CREATE ROLE "${configs.postgres.user}" WITH LOGIN PASSWORD '${configs.postgres.password}';
       CREATE ROLE "${configs.bitwarden.dbuser}" WITH LOGIN PASSWORD '${configs.bitwarden.dbpass}';
+      CREATE ROLE "${configs.freshrss.dbuser}" WITH LOGIN PASSWORD '${configs.freshrss.dbpass}';
+      CREATE ROLE "${configs.n8n.dbuser}" WITH LOGIN PASSWORD '${configs.n8n.dbpass}';
       CREATE DATABASE "main" WITH OWNER "${configs.postgres.user}";
       CREATE DATABASE "${configs.nextcloud.dbname}" WITH OWNER "${configs.postgres.user}";
       CREATE DATABASE "${configs.nocodb.dbname}" WITH OWNER "${configs.postgres.user}";
@@ -302,7 +317,9 @@ in
     ossutil
     postgresql_14
     tailscale
+    ffmpeg
 
+    conda
     (python3.withPackages (p: with p; [
       requests
     ]))
@@ -349,6 +366,11 @@ in
       # otherwise authenticate with tailscale
       ${tailscale}/bin/tailscale up -authkey ${configs.tailscale.key}
     '';
+  };
+
+  fileSystems."/mnt/dsm" = {
+    device = "192.168.2.79:/volume1/homes";
+    fsType = "nfs";
   };
 
   # Open ports in the firewall.

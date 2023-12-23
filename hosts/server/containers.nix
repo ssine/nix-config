@@ -88,5 +88,44 @@ in
       volumes = [ "${config.kiwi.folder}:/data" "${config.kiwi.log-folder}:/logs" ];
       user = "1000:100";
     };
+
+    rsshub = {
+      autoStart = true;
+      image = "diygod/rsshub:2023-09-29";
+      ports = [ "${config.rsshub.port}:1200" ];
+      environment = {
+        REQUEST_RETRY = "5";
+        REQUEST_TIMEOUT = "10000";
+        ALLOW_ORIGIN = "*";
+      } // config.rsshub.environment;
+    };
+
+    freshrss = {
+      autoStart = true;
+      image = "freshrss/freshrss:1.21.0";
+      ports = [ "${config.freshrss.port}:80" ];
+      volumes = [ "${config.freshrss.folder}/data:/var/www/FreshRSS/data" "${config.freshrss.folder}/extensions:/var/www/FreshRSS/extensions" ];
+      environment = {
+        TZ = "Asia/Shanghai";
+        CRON_MIN = "13,43";
+      };
+    };
+
+    n8n = {
+      autoStart = true;
+      image = "docker.n8n.io/n8nio/n8n:1.9.0";
+      ports = [ "${config.n8n.port}:5678" ];
+      volumes = [ "${config.n8n.folder}:/home/node/.n8n" ];
+      environment = {
+        GENERIC_TIMEZONE = "Asia/Shanghai";
+        TZ = "Asia/Shanghai";
+        DB_TYPE="postgresdb";
+        DB_POSTGRESDB_HOST=config.host;
+        DB_POSTGRESDB_PORT=toString config.postgres.port;
+        DB_POSTGRESDB_DATABASE=config.n8n.dbname;
+        DB_POSTGRESDB_USER=config.n8n.dbuser;
+        DB_POSTGRESDB_PASSWORD=config.n8n.dbpass;
+      } // config.n8n.environment;
+    };
   };
 }

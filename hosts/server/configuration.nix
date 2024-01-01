@@ -57,8 +57,7 @@ in
   };
 
   systemd.services.moment = {
-    # enable = !configs.maintenance;
-    enable = false;
+    enable = !configs.maintenance;
     description = "moment";
     serviceConfig = {
       WorkingDirectory = configs.neon-folder;
